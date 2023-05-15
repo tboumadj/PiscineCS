@@ -6,7 +6,7 @@
 #    By: tboumadj <tboumadj@student.42mulhouse.fr>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 17:41:06 by tboumadj          #+#    #+#              #
-#    Updated: 2023/05/15 19:51:59 by tboumadj         ###   ########.fr        #
+#    Updated: 2023/05/15 20:25:30 by tboumadj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,19 @@ def download_img(addr):
     filename = filename[-21:]
 # Télécharger l'image
     way_file = os.path.join(drt, filename)
-    urllib.request.urlretrieve(url, way_file)
+    try:
+        urllib.request.urlretrieve(url, way_file)
+        print(" Img download success!")
+    except urllib.error.HTTPError as e:
+        print("error with download..", e.code, e.reason)
+        return
+    except urllib.error.URLError as e:
+        print("error with download..", e.reason)
+        return
+    except Exception as e:
+        print("failed..")
+        return
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(prog='Spider')
