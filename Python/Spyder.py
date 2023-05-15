@@ -6,7 +6,7 @@
 #    By: tboumadj <tboumadj@student.42mulhouse.fr>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 17:41:06 by tboumadj          #+#    #+#              #
-#    Updated: 2023/05/15 20:25:30 by tboumadj         ###   ########.fr        #
+#    Updated: 2023/05/15 20:39:15 by tboumadj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,9 +35,7 @@ def download_img(addr):
     drt = "data"
     if not os.path.exists(drt):
         os.mkdir(drt)
-# URL de l'image à télécharger
     url = addr
-# Nom du fichier de destination
     filename = os.path.basename(addr)
     filename = filename[-21:]
 # Télécharger l'image
