@@ -6,7 +6,7 @@
 #    By: tboumadj <tboumadj@student.42mulhouse.fr>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 17:41:06 by tboumadj          #+#    #+#              #
-#    Updated: 2023/05/16 20:31:53 by tboumadj         ###   ########.fr        #
+#    Updated: 2023/05/16 20:45:38 by tboumadj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -102,8 +102,7 @@ def depth_level(url, path, depth, max_depth):
         if link.startswith("/") or link.startswith(url):
             href = urljoin(url, link)
             if href not in visited:
-                depth += 1
-                depth_level(href, path, depth, max_depth)
+                depth_level(href, path, depth+1, max_depth)
 
 #-------------------------------------------
 
@@ -117,7 +116,7 @@ if __name__ == "__main__":
     #extract_img(args.URL, args.path)
 # TEST-------
     
-    max_depth = 0
+    max_depth = 1
     depth = 0
     if args.URL[-1] != '/':
         args.URL = args.URL + "/"
