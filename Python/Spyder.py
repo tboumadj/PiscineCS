@@ -6,12 +6,13 @@
 #    By: tboumadj <tboumadj@student.42mulhouse.fr>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 17:41:06 by tboumadj          #+#    #+#              #
-#    Updated: 2023/05/16 14:08:01 by tboumadj         ###   ########.fr        #
+#    Updated: 2023/05/16 14:31:25 by tboumadj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 import urllib.request
+from urllib.parse import urljoin
 import requests
 import argparse
 import os
@@ -72,6 +73,25 @@ def download_img(addr, folder):
         return
 #--------------------------------------------
 
+#Fonction controle de profondeur #Test
+def depth_level(url, depth):
+    if depth > max_depth:
+        return
+    visited.add(url)
+    try:
+        response = requests.get(url)
+    except:
+        return
+    tree = html.fromstring(response.content)
+    links = tree.xpath("//a/@href")
+    for link in links:
+        if link.startswith("/") or link.startswith(url):
+            href = urljoin(url, link)
+            if href not in visited:
+                depth_level(href, depth+1)
+    return
+#-------------------------------------------
+
 if __name__ == "__main__":
 # parsing des param
     parser = argparse.ArgumentParser(prog='Spider')
@@ -79,7 +99,14 @@ if __name__ == "__main__":
     parser.add_argument('-p', '--path', type=str, default='data', help='Folder to stock')
     args = parser.parse_args()
 # envoi dans le programme d extract
-    extract_img(args.URL, args.path)
+    #extract_img(args.URL, args.path)
+# TEST-------
+    max_depth = 10
+    depth = 0
+    visited = set()
+    depth_level(args.URL, depth)
+    print("Maximum depth of the website:", max([len(x.split("/"))-3 for x in visited]))
 
+#-------------------------------------------
 
 
