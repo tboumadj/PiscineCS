@@ -6,7 +6,7 @@
 #    By: tboumadj <tboumadj@student.42mulhouse.fr>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 17:41:06 by tboumadj          #+#    #+#              #
-#    Updated: 2023/05/16 19:29:42 by tboumadj         ###   ########.fr        #
+#    Updated: 2023/05/16 20:31:53 by tboumadj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,8 +38,8 @@ def extract_img(arg, folder):
 # extract des balise src dans img
     img_tags = tree.xpath("//img/@src")
     ##TEST---------
-    for tag in img_tags:
-        download_img(tag, folder, arg)
+    #for tag in img_tags:
+    #   download_img(tag, folder, arg)
 #-----------------------------------------------
 
 #Fonction telechargement des image + check des extensions
@@ -53,7 +53,12 @@ def download_img(addr, folder, url_base):
     #print(url_base)
     url = addr
     #print(url)
-    if not (url.startswith("http")):
+    check_ext = url.split(".")[-1]
+    valid_ext = ('jpg', 'jpeg', 'png', 'gif', 'bmp')
+    if check_ext not in valid_ext:
+        #print("not valid extensions..")
+        return
+    if not url.startswith("http"):
         if (url.startswith("//")):
             url = "https:" + url
         elif (url[0].isalnum()):
@@ -64,13 +69,9 @@ def download_img(addr, folder, url_base):
     #print("img:", url)
     filename = os.path.basename(addr)
     #filename = filename[-21:]
-    check_ext = filename.split(".")[-1]
-    valid_ext = ('jpg', 'jpeg', 'png', 'gif', 'bmp')
-    if check_ext not in valid_ext:
-        #print("not valid extensions..")
-        return
 # Télécharger l'image
     way_file = os.path.join(drt, filename)
+    #print(way_file)
     try:
         urllib.request.urlretrieve(url, way_file)
         #print("Img download with success!")
@@ -81,7 +82,7 @@ def download_img(addr, folder, url_base):
         #print("error with download..", e.reason)
         return
     except Exception as e:
-        #print("failed..")
+        #print("failed..", e)
         return
 #--------------------------------------------
 
@@ -116,7 +117,7 @@ if __name__ == "__main__":
     #extract_img(args.URL, args.path)
 # TEST-------
     
-    max_depth = 2
+    max_depth = 0
     depth = 0
     if args.URL[-1] != '/':
         args.URL = args.URL + "/"
