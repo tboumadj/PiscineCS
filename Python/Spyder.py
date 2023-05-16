@@ -6,7 +6,7 @@
 #    By: tboumadj <tboumadj@student.42mulhouse.fr>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 17:41:06 by tboumadj          #+#    #+#              #
-#    Updated: 2023/05/16 13:49:41 by tboumadj         ###   ########.fr        #
+#    Updated: 2023/05/16 14:08:01 by tboumadj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,12 +41,14 @@ def extract_img(arg, folder):
 #Fonction telechargement des image + check des extensions
 def download_img(addr, folder):
 # creation du fichier data
-    print("img:", addr)
     drt = folder
     if not os.path.exists(drt):
         os.mkdir(drt)
 # creation et check du name de l 'image et son extension
     url = addr
+    if (url.startswith("//")):
+        url = "https:" + url
+    print("img:", url)
     filename = os.path.basename(addr)
     #filename = filename[-21:]
     check_ext = filename.split(".")[-1]
