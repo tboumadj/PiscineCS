@@ -6,7 +6,7 @@
 #    By: tboumadj <tboumadj@student.42mulhouse.fr>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 17:41:06 by tboumadj          #+#    #+#              #
-#    Updated: 2023/05/16 20:45:38 by tboumadj         ###   ########.fr        #
+#    Updated: 2023/05/17 15:14:47 by tboumadj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,8 +38,8 @@ def extract_img(arg, folder):
 # extract des balise src dans img
     img_tags = tree.xpath("//img/@src")
     ##TEST---------
-    #for tag in img_tags:
-    #   download_img(tag, folder, arg)
+    for tag in img_tags:
+      download_img(tag, folder, arg)
 #-----------------------------------------------
 
 #Fonction telechargement des image + check des extensions
@@ -111,19 +111,25 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(prog='Spider')
     parser.add_argument('URL', help='URL to spider')
     parser.add_argument('-p', '--path', type=str, default='data', help='Folder to stock')
+    parser.add_argument('-r', '--recursive', action='store_true', help='Recursivity')
+    parser.add_argument('-l', '--level', type=int, help='level of depth')
     args = parser.parse_args()
 # envoi dans le programme d extract
     #extract_img(args.URL, args.path)
 # TEST-------
-    
-    max_depth = 1
+    if args.recursive is True and args.level is None:
+        max_depth = 5
+    elif args.level:
+        max_depth = args.level
+    else:
+        max_depth = 0
     depth = 0
+    print(max_depth)
     if args.URL[-1] != '/':
         args.URL = args.URL + "/"
     depth_level(args.URL, args.path, depth, max_depth)
     
     print("visited", visited)
-    print("Maximum depth of the website:", max([len(x.split("/"))-3 for x in visited]))
 
 #-------------------------------------------
 
