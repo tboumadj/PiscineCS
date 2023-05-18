@@ -6,7 +6,7 @@
 #    By: tboumadj <tboumadj@student.42mulhouse.fr>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/17 15:59:18 by tboumadj          #+#    #+#              #
-#    Updated: 2023/05/18 16:16:45 by tboumadj         ###   ########.fr        #
+#    Updated: 2023/05/18 17:22:21 by tboumadj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ def extract_data(path):
                 print(f"{tag}: {data}")
         else:
             print("none data exif")
+#-----------------------------------------------
 
 if __name__ == "__main__":
 # parsing param
