@@ -6,7 +6,7 @@
 #    By: tboumadj <tboumadj@student.42mulhouse.fr>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/17 15:59:18 by tboumadj          #+#    #+#              #
-#    Updated: 2023/05/18 17:22:21 by tboumadj         ###   ########.fr        #
+#    Updated: 2023/05/18 17:34:12 by tboumadj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,6 @@ def extract_data(path):
         tag = TAGS.get(tag_id, tag_id)
         data = exifdata.get(tag_id)
         if exifdata is not None:
-            for tag in exifdata:
                 print(f"{tag}: {data}")
         else:
             print("none data exif")
