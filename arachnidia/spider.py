@@ -6,7 +6,7 @@
 #    By: tboumadj <tboumadj@student.42mulhouse.fr>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 17:41:06 by tboumadj          #+#    #+#              #
-#    Updated: 2023/05/19 13:33:44 by tboumadj         ###   ########.fr        #
+#    Updated: 2023/05/19 16:14:16 by tboumadj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,13 +31,11 @@ def extract_img(arg, folder):
         response = requests.get(arg)
     except Exception as e:
         print ("URL invalid.. or no response..")
-        #print (e)
         return
     html_doc = response.content
     tree = html.fromstring(html_doc)
 # extract des balise src dans img
     img_tags = tree.xpath("//img/@src")
-    ##TEST---------
     for tag in img_tags:
       download_img(tag, folder, arg)
 #-----------------------------------------------
@@ -50,13 +48,12 @@ def download_img(addr, folder, url_base):
         os.mkdir(drt)
 # creation et check du name de l 'image et son extension
     url_base = url_base.rsplit('/', 1)[0]
-    #print(url_base)
     url = addr
-    #print(url)
+    print(url)
     check_ext = url.split(".")[-1]
     valid_ext = ('jpg', 'jpeg', 'png', 'gif', 'bmp')
     if check_ext not in valid_ext:
-        #print("not valid extensions..")
+        print("not valid extensions..")
         return
     if not url.startswith("http"):
         if (url.startswith("//")):
@@ -65,24 +62,23 @@ def download_img(addr, folder, url_base):
             url = url_base + "/" + url
         elif (url.startswith("/")):
             url = url_base + url
+    if url.find("wordpress"):
+        url = url.replace("wordpress", "www")
 #retaille et check de l image
-    #print("img:", url)
     filename = os.path.basename(addr)
-    #filename = filename[-21:]
 # Télécharger l'image
     way_file = os.path.join(drt, filename)
-    #print(way_file)
     try:
         urllib.request.urlretrieve(url, way_file)
-        #print("Img download with success!")
+        print("Img download with success!")
     except urllib.error.HTTPError as e:
-        #print("error with download..", e.code, e.reason)
+        print("error with download..", e.code, e.reason)
         return
     except urllib.error.URLError as e:
-        #print("error with download..", e.reason)
+        print("error with download..", e.reason)
         return
     except Exception as e:
-        #print("failed..", e)
+        print("failed..", e)
         return
 #--------------------------------------------
 
@@ -114,9 +110,7 @@ def main():
     parser.add_argument('-r', '--recursive', action='store_true', help='Recursivity')
     parser.add_argument('-l', '--level', type=int, help='level of depth')
     args = parser.parse_args()
-# envoi dans le programme d extract
-    #extract_img(args.URL, args.path)
-# TEST-------
+# Set recursivity
     if args.recursive is True and args.level is None:
         max_depth = 5
     elif args.level:
@@ -124,12 +118,11 @@ def main():
     else:
         max_depth = 0
     depth = 0
-    print(max_depth)
+# ----
     if args.URL[-1] != '/':
         args.URL = args.URL + "/"
     depth_level(args.URL, args.path, depth, max_depth)
-    
-    print("visited", visited)
+    print("visited: ", visited)
 
 #-------------------------------------------
 if __name__ == "__main__":

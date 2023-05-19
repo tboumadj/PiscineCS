@@ -6,7 +6,7 @@
 #    By: tboumadj <tboumadj@student.42mulhouse.fr>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/17 15:59:18 by tboumadj          #+#    #+#              #
-#    Updated: 2023/05/19 13:33:00 by tboumadj         ###   ########.fr        #
+#    Updated: 2023/05/19 16:16:11 by tboumadj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,8 +36,7 @@ def main():
     parser = argparse.ArgumentParser(prog='scoprion')
     parser.add_argument('File', help='File to extract')
     args = parser.parse_args()
-#Test------------------
-    print(args.File)
+#extract metoData    
     extract_data(args.File)
 
 #--------------------------------------------------
