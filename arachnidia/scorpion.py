@@ -6,7 +6,7 @@
 #    By: tboumadj <tboumadj@student.42mulhouse.fr>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/17 15:59:18 by tboumadj          #+#    #+#              #
-#    Updated: 2023/05/18 17:34:12 by tboumadj         ###   ########.fr        #
+#    Updated: 2023/05/19 13:33:00 by tboumadj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ def extract_data(path):
             print("none data exif")
 #-----------------------------------------------
 
-if __name__ == "__main__":
+def main():
 # parsing param
     parser = argparse.ArgumentParser(prog='scoprion')
     parser.add_argument('File', help='File to extract')
@@ -39,5 +39,8 @@ if __name__ == "__main__":
 #Test------------------
     print(args.File)
     extract_data(args.File)
+
 #--------------------------------------------------
+if __name__ == "__main__":
+    main()
 

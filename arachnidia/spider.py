@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Spyder.py                                          :+:      :+:    :+:    #
+#    spider.py                                          :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: tboumadj <tboumadj@student.42mulhouse.fr>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 17:41:06 by tboumadj          #+#    #+#              #
-#    Updated: 2023/05/17 15:14:47 by tboumadj         ###   ########.fr        #
+#    Updated: 2023/05/19 13:33:44 by tboumadj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -106,7 +106,7 @@ def depth_level(url, path, depth, max_depth):
 
 #-------------------------------------------
 
-if __name__ == "__main__":
+def main():
 # parsing des param
     parser = argparse.ArgumentParser(prog='Spider')
     parser.add_argument('URL', help='URL to spider')
@@ -132,5 +132,7 @@ if __name__ == "__main__":
     print("visited", visited)
 
 #-------------------------------------------
+if __name__ == "__main__":
+    main()
 
 

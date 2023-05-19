@@ -6,7 +6,7 @@
 #    By: tboumadj <tboumadj@student.42mulhouse.fr>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 17:00:35 by tboumadj          #+#    #+#              #
-#    Updated: 2023/05/18 18:05:11 by tboumadj         ###   ########.fr        #
+#    Updated: 2023/05/19 14:02:28 by tboumadj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,39 +14,51 @@ import argparse
 import pyotp
 import os
 
-def test_hotp(key):
-    count = 0
-    hotp = pyotp.HOTP(key)
-    password = hotp.at(count)
-    return (password)
-#-----------------------------------
+def extract_file(path_file):
+    file = open(path_file, "r")
+    inside = file.read()
+    file.close()
+    return (inside)
 
-def dir_hotp(str, key):
-    count = 0
-    hotp = pyotp.HOTP(key)
-    password = hotp.at(count)
-    #create folder with key
+#----------------------------------
+
+def creat_out(key):
     file = open("ft_otp.key", "w")
-    file.write(password)
+    file.write(key)
     file.close()
     print("key create in ft_otp.key ..")
-    return (password)
+
 #-----------------------------------
 
-if __name__ == "__main__":
+def dir_hotp(str, _k):
+    count = 0
+    hotp = pyotp.HOTP(str)
+    password = hotp.at(count)
+    #create folder with key
+    if _k == True:
+        creat_out(password)
+    #---
+    return (password)
+
+#-----------------------------------
+
+def main():
 # Parsing param
     parser = argparse.ArgumentParser(prog='ft_otp')
     parser.add_argument('-g', '--hex')
-    #parser.add_argument('-k')
-    parser.add_argument('key', help='Key to use')
+    parser.add_argument('-k', '--temp')
     args = parser.parse_args()
-#Test-------------------
-    print("Test...")
-    print(args.key)
+#main-------------------
     if args.hex:
-        n_pass = dir_hotp(args.hex, args.key)
-    else:
-        n_pass = test_hotp(args.key)
-    print("MDP_main is:", n_pass)
+        _k = True
+        _dt = extract_file(args.hex)
+        n_key = dir_hotp(_dt, _k)
+    elif args.temp:
+        _k = False
+        _dt = extract_file(args.temp)
+        n_key = dir_hotp(_dt, _k)
+    print("key_main is:", n_key)
 
 #----------------------------------------
+if __name__ == "__main__":
+    main()
