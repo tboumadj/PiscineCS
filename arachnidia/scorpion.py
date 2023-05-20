@@ -6,13 +6,22 @@
 #    By: tboumadj <tboumadj@student.42mulhouse.fr>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/17 15:59:18 by tboumadj          #+#    #+#              #
-#    Updated: 2023/05/20 14:36:43 by tboumadj         ###   ########.fr        #
+#    Updated: 2023/05/20 15:40:37 by tboumadj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 from PIL import Image
 from PIL.ExifTags import TAGS
 import argparse
+
+#extrat_meta
+def extract_meta(img):
+    meta = img.info
+    if meta is not None:
+        for key, val in meta.items():
+            if key == "exif":
+                return
+            print(f"{key}: {val}")
 
 def extract_data(path):
     try:
@@ -21,10 +30,7 @@ def extract_data(path):
         print("cannot open file...")
         return
 #extract metadata
-    meta = img.info
-    if meta is not None:
-        for key, val in meta.items():
-            print(f"{key}: {val}")
+    extract_meta(img)
 #extract exifdata
     exifdata = img.getexif()
     exif = {}
