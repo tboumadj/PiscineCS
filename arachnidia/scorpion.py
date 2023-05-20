@@ -6,7 +6,7 @@
 #    By: tboumadj <tboumadj@student.42mulhouse.fr>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/17 15:59:18 by tboumadj          #+#    #+#              #
-#    Updated: 2023/05/19 16:16:11 by tboumadj         ###   ########.fr        #
+#    Updated: 2023/05/20 14:36:43 by tboumadj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,12 @@ def extract_data(path):
     except Exception as e:
         print("cannot open file...")
         return
+#extract metadata
+    meta = img.info
+    if meta is not None:
+        for key, val in meta.items():
+            print(f"{key}: {val}")
+#extract exifdata
     exifdata = img.getexif()
     exif = {}
     for tag_id, value in exifdata.items():

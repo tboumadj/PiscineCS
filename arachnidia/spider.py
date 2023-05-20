@@ -6,7 +6,7 @@
 #    By: tboumadj <tboumadj@student.42mulhouse.fr>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 17:41:06 by tboumadj          #+#    #+#              #
-#    Updated: 2023/05/19 16:14:16 by tboumadj         ###   ########.fr        #
+#    Updated: 2023/05/20 15:14:04 by tboumadj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -113,6 +113,9 @@ def main():
 # Set recursivity
     if args.recursive is True and args.level is None:
         max_depth = 5
+    elif args.level and args.recursive == False:
+        print("missing -r option")
+        return
     elif args.level:
         max_depth = args.level
     else:
