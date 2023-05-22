@@ -6,41 +6,48 @@
 #    By: tboumadj <tboumadj@student.42mulhouse.fr>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/17 15:59:18 by tboumadj          #+#    #+#              #
-#    Updated: 2023/05/20 15:40:37 by tboumadj         ###   ########.fr        #
+#    Updated: 2023/05/22 14:12:41 by tboumadj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 from PIL import Image
-from PIL.ExifTags import TAGS
+import piexif
 import argparse
 
 #extrat_meta
-def extract_meta(img):
+def extract_meta(path):
+    try:
+        img = Image.open(path)
+    except Exception as e:
+        print("cannot open file...")
+        return
     meta = img.info
     if meta is not None:
         for key, val in meta.items():
             if key == "exif":
                 return
             print(f"{key}: {val}")
+    img.close()
+#----------------------------------------------
 
-def extract_data(path):
+def extract_exif(exif_data):
     try:
-        img = Image.open(path)
+        for ifd_name in exif_data:
+            print(f"IFD: {ifd_name}")
+            for tag in exif_data[ifd_name]:
+                try:
+                    tag_name = piexif.TAGS[ifd_name][tag]["name"]
+                except Exception as e:
+                    return
+                tag_value = exif_data[ifd_name][tag]
+                print(f"{tag_name}: {tag_value}")
     except Exception as e:
-        print("cannot open file...")
         return
-#extract metadata
-    extract_meta(img)
-#extract exifdata
-    exifdata = img.getexif()
-    exif = {}
-    for tag_id, value in exifdata.items():
-        tag = TAGS.get(tag_id, tag_id)
-        data = exifdata.get(tag_id)
-        if exifdata is not None:
-                print(f"{tag}: {data}")
-        else:
-            print("none data exif")
+#----------------------------------------------------
+
+def get_exif_data(path):
+    exif_info = piexif.load(path)
+    return exif_info
 #-----------------------------------------------
 
 def main():
@@ -48,9 +55,10 @@ def main():
     parser = argparse.ArgumentParser(prog='scoprion')
     parser.add_argument('File', help='File to extract')
     args = parser.parse_args()
-#extract metoData    
-    extract_data(args.File)
-
+#extract Data
+    extract_meta(args.File)
+    exif_data = get_exif_data(args.File)
+    extract_exif(exif_data)
 #--------------------------------------------------
 if __name__ == "__main__":
     main()
