@@ -6,7 +6,7 @@
 #    By: tboumadj <tboumadj@student.42mulhouse.fr>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/17 15:59:18 by tboumadj          #+#    #+#              #
-#    Updated: 2023/05/22 14:12:41 by tboumadj         ###   ########.fr        #
+#    Updated: 2023/05/24 17:11:13 by tboumadj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,15 @@ def extract_exif(exif_data):
 #----------------------------------------------------
 
 def get_exif_data(path):
-    exif_info = piexif.load(path)
+    try:
+        img = Image.open(path)
+    except Exception as e:
+        return
+    try:
+        exif_info = piexif.load(img.info[('exif')])
+    except KeyError:
+        exif_info = None
+        print("No exif data in image..")
     return exif_info
 #-----------------------------------------------
 
@@ -56,6 +64,11 @@ def main():
     parser.add_argument('File', help='File to extract')
     args = parser.parse_args()
 #extract Data
+    check_ext = args.File.split(".")[-1]
+    valid_ext = ('jpg', 'jpeg', 'png', 'gif', 'bmp')
+    if check_ext not in valid_ext:
+        print("not valid extension..")
+        return
     extract_meta(args.File)
     exif_data = get_exif_data(args.File)
     extract_exif(exif_data)

@@ -6,7 +6,7 @@
 #    By: tboumadj <tboumadj@student.42mulhouse.fr>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 17:41:06 by tboumadj          #+#    #+#              #
-#    Updated: 2023/05/20 15:14:04 by tboumadj         ###   ########.fr        #
+#    Updated: 2023/05/24 17:11:57 by tboumadj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -90,6 +90,7 @@ def depth_level(url, path, depth, max_depth):
     try:
         response = requests.get(url)
     except:
+        print("Url not valid or no response...")
         return
     extract_img(url, path)
     tree = html.fromstring(response.content)
